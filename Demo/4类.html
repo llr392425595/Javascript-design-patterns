@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类</title>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+
+
+    <script type="text/javascript">
+
+
+
+        /*类
+        * 优点：类的每个实例化对象都拥有类的方法，
+        * 缺点：占用过多不必要的内存：
+        *
+        * */
+        var CheckObject = function () {
+            this.checkName = function () {
+                var oVal1 = document.getElementById('user');
+                var oSpan1 = document.getElementById('userInfo');
+
+                var reg1=/^[a-zA-Z]\w*$/i;
+                if(oVal1.value && !reg1.test(oVal1.value)){
+                    oSpan1.style.display = "inline-block";
+                }else{
+                    oSpan1.style.display = "none";
+                }
+            };
+
+            this.checkPassword = function () {
+                var oVal2 = document.getElementById('pass');
+                var oSpan2 = document.getElementById('passInfo');
+
+                var reg2 = /^([a-zA-z]+[0-9]+)|([0-9]+[a-zA-Z]+)$/i;
+
+                if(oVal2.value.length >= 8 && reg2.test(oVal2.value)){
+                    oSpan2.style.display = "none";
+                }else{
+                    oSpan2.style.display = "inline-block";
+                }
+            };
+
+            this.checkMail = function () {
+                var oVal3 = document.getElementById('mail');
+                var oSpan3 = document.getElementById('mailInfo');
+
+                var reg3 = /^([a-zA-Z0-9_-])+\@([a-zA-Z0-9_-])+.([a-zA-Z])+$/;
+                if(oVal3.value && reg3.test(oVal3.value)){
+                    oSpan3.style.display = "none";
+                }else{
+                    oSpan3.style.display = "inline-block";
+                }
+            };
+
+        };
+
+
+
+
+
+        var a = new CheckObject();
+        //console.log(a);
+
+    </script>
+</head>
+<body>
+<div class="main">
+    <form>
+        <label class="col-md-2 alr">用户名：</label>
+        <input class="col-md-4" type="text" id="user" onkeyup="a.checkName()" />
+        <span class="col-md-3" id="userInfo">以字母开头，可包含数字、字母、下划线。</span><br><br>
+        <label class="col-md-2 alr">密码：</label>
+        <input class="col-md-4" type="password" id="pass" onkeyup="a.checkPassword()" />
+        <span class="col-md-3" id="passInfo">至少8位，必须包含字母、数字</span><br><br>
+        <label class="col-md-2 alr">邮箱：</label>
+        <input class="col-md-4" type="text" id="mail" onblur="a.checkMail()" />
+        <span class="col-md-3" id="mailInfo">请输入正确邮箱</span>
+    </form>
+</div>
+</body>
+</html>

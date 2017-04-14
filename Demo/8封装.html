@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>封装</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    var Book = function (id,booknane,price) {
+        //私有属性及私有方法
+        var num = 1;
+        function checkId() {
+            return id;
+        }
+        //对象公有属性
+        this.id = id;
+        this.bookname = booknane;
+        this.price = price;
+        //对象公有方法
+        this.copy= function () {
+
+        }
+
+    };
+
+    Book.prototype = {
+        showId : function () {
+            return this.id;
+        },
+        showBookNane : function () {
+            return this.bookname;
+        },
+        showPrice : function () {
+            return this.price;
+        }
+    };
+
+
+    var book1 = new Book(10,"javascript","$100");
+
+</script>
+</html>

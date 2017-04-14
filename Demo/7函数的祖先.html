@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类</title>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+
+
+    <script type="text/javascript">
+
+
+
+        /*将你要使用的函数挂载在函数对象[Object Function]的原型链上
+         * 缺点：对别人创建的函数产生了污染
+         *
+         * 解决方法：抽象出一个添加方法的功能方法
+         *
+         * */
+
+
+//        //将函数直接作为对象属性
+//        Function.prototype.addMethod = function (name,fn) {
+//           // console.log(this.toString())
+//            this[name] = fn;
+//            return this;
+//        };
+
+
+        //将函数添加到Function对象的原型链
+        //注意：这种方式需要用new关键字来实例化
+        Function.prototype.addMethod = function (name,fn) {
+            this.prototype[name] = fn;
+            return this;
+        };
+
+
+        //可给函数对象添加多个方法的功能方法
+        Function.prototype.addMethod2 = function (obj) {
+            for(var key in obj){
+                this.prototype[key] = obj[key];
+                return this;
+            }
+
+        };
+
+
+
+
+        //默认给函数对象自身添加方法，flag为true 时给远兴传方法
+        Function.prototype.addMethod3 = function (name,fn,flag) {
+            if(flag){
+                this.prototype[name] = fn;
+            }else
+                this[name] = fn;
+            return this;
+        };
+
+
+
+        var methods = new Function();
+
+        methods.addMethod("checkName",function () {
+            var oVal1 = document.getElementById('user');
+            var oSpan1 = document.getElementById('userInfo');
+
+            var reg1=/^[a-zA-Z]\w*$/i;
+            if(oVal1.value && !reg1.test(oVal1.value)){
+                oSpan1.style.display = "inline-block";
+            }else{
+                oSpan1.style.display = "none";
+            }
+            return this;
+        }).addMethod("checkPassword",function () {
+            var oVal2 = document.getElementById('pass');
+            var oSpan2 = document.getElementById('passInfo');
+
+            var reg2 = /^([a-zA-z]+[0-9]+)|([0-9]+[a-zA-Z]+)$/i;
+
+            if(oVal2.value.length >= 8 && reg2.test(oVal2.value)){
+                oSpan2.style.display = "none";
+            }else{
+                oSpan2.style.display = "inline-block";
+            }
+            return this;
+        }).addMethod("checkMail",function () {
+            var oVal3 = document.getElementById('mail');
+            var oSpan3 = document.getElementById('mailInfo');
+
+            var reg3 = /^([a-zA-Z0-9_-])+\@([a-zA-Z0-9_-])+.([a-zA-Z])+$/;
+            if(oVal3.value && reg3.test(oVal3.value)){
+                oSpan3.style.display = "none";
+            }else{
+                oSpan3.style.display = "inline-block";
+            }
+            return this;
+        });
+
+        /*----------------------------方法挂载在函数原型上-------------------------------*/
+//                Function.prototype = {
+//                    checkName : function(){
+//
+//                    },
+//
+//                    //验证密码
+//                    checkPassword : function (){
+//
+//                    },
+//
+//                    //验证邮箱
+//                    checkMail : function (){
+//
+//                    }
+//                };
+
+        var m = new methods();
+        console.log(methods);
+
+    </script>
+</head>
+<body>
+<div class="main">
+    <form>
+        <label class="col-md-2 alr">用户名：</label>
+        <input class="col-md-4" type="text" id="user" onkeyup="m.checkName()" />
+        <span class="col-md-3" id="userInfo">以字母开头，可包含数字、字母、下划线。</span><br><br>
+        <label class="col-md-2 alr">密码：</label>
+        <input class="col-md-4" type="password" id="pass" onkeyup="m.checkPassword()" />
+        <span class="col-md-3" id="passInfo">至少8位，必须包含字母、数字</span><br><br>
+        <label class="col-md-2 alr">邮箱：</label>
+        <input class="col-md-4" type="text" id="mail" onblur="m.checkMail()" />
+        <span class="col-md-3" id="mailInfo">请输入正确邮箱</span>
+    </form>
+</div>
+</body>
+</html>

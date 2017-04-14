@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>真假对象</title>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+
+
+    <script type="text/javascript">
+
+
+
+        /*一个生产对象的机器
+        * 优点：每次方法的调用都可以构造出一个对象
+        * 缺点：每次构造的对象与这个方法没有关系
+        * 因此并不能称之为一个类
+        *
+        *
+        * 顺带一提：自行车 是 车
+        *
+        * */
+
+        var CkeckObject = function () {
+            return {
+                //验证姓名
+                checkName : function (){
+                    var oVal1 = document.getElementById('user');
+                    var oSpan1 = document.getElementById('userInfo');
+
+                    var reg1=/^[a-zA-Z]\w*$/i;
+                    if(oVal1.value && !reg1.test(oVal1.value)){
+                        oSpan1.style.display = "inline-block";
+                    }else{
+                        oSpan1.style.display = "none";
+                    }
+                    return this;
+                },
+
+                //验证密码
+                checkPassword : function (){
+                    var oVal2 = document.getElementById('pass');
+                    var oSpan2 = document.getElementById('passInfo');
+
+                    var reg2 = /^([a-zA-z]+[0-9]+)|([0-9]+[a-zA-Z]+)$/i;
+
+                    if(oVal2.value.length >= 8 && reg2.test(oVal2.value)){
+                        oSpan2.style.display = "none";
+                    }else{
+                        oSpan2.style.display = "inline-block";
+                    }
+                    return this;
+                },
+
+                //验证邮箱
+                checkMail : function (){
+                    var oVal3 = document.getElementById('mail');
+                    var oSpan3 = document.getElementById('mailInfo');
+
+                    var reg3 = /^([a-zA-Z0-9_-])+\@([a-zA-Z0-9_-])+.([a-zA-Z])+$/;
+                    if(oVal3.value && reg3.test(oVal3.value)){
+                        oSpan3.style.display = "none";
+                    }else{
+                        oSpan3.style.display = "inline-block";
+                    }
+                    return this;
+                }
+            }
+        };
+
+
+        var a = CkeckObject();
+    </script>
+</head>
+<body>
+<div class="main">
+    <form>
+        <label class="col-md-2 alr">用户名：</label>
+        <input class="col-md-4" type="text" id="user"  />
+        <span class="col-md-3" id="userInfo">以字母开头，可包含数字、字母、下划线。</span><br><br>
+        <label class="col-md-2 alr">密码：</label>
+        <input class="col-md-4" type="password" id="pass"  />
+        <span class="col-md-3" id="passInfo">至少8位，必须包含字母、数字</span><br><br>
+        <label class="col-md-2 alr">邮箱：</label>
+        <input class="col-md-4" type="text" id="mail" />
+        <span class="col-md-3" id="mailInfo">请输入正确邮箱</span>
+
+        <a href="#" onclick="a.checkName().checkPassword().checkMail()">验证</a>
+    </form>
+</div>
+</body>
+</html>
