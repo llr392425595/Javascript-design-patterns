@@ -11,7 +11,7 @@ var book = {
 
 function inheritObject(o){
     //声明一个过度函数对象
-    function F() {};
+    function F() {}
     //过渡对象的原型继承父对象
     F.prototype = o;
     //返回过渡对象的一个实例，该实例的原型继承了父对象
@@ -25,7 +25,7 @@ function createBook(obj) {
     //扩展新对象
     o.getName = function () {
         console.log(name);
-    }
+    };
 
     //返回扩展后的新对象
     return o;
